@@ -48,16 +48,19 @@ class _HeaderState extends State<Header> {
         Container(
          height: 50,
          
-          
+          margin: EdgeInsets.only(left:250,right:250),
           decoration: BoxDecoration(
             color: Colors.grey,
-            borderRadius: BorderRadius.circular(20)
+            borderRadius: BorderRadius.circular(50)
 
           )
           ,
           child: TextField(
+            
             decoration: InputDecoration(
-              border: InputBorder.none
+              prefixIcon: Icon(Icons.search),
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(left:30)
             ),
           ),)
       ],
