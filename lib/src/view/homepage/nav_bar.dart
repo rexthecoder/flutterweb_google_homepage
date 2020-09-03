@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 
-Widget navBar(GlobalKey<ScaffoldState> _scaffoldKey){
+Widget navBar(GlobalKey<ScaffoldState> _scaffoldKey, bool _light, bool ){
   return Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -13,6 +13,8 @@ Widget navBar(GlobalKey<ScaffoldState> _scaffoldKey){
               _scaffoldKey.currentState.openDrawer();
               },
             ),
+             
+    
           ],
         ),
       );
@@ -24,3 +26,13 @@ Widget mainDrawer(){
     child: ListTile(),
   );
 }
+  ThemeData darkTheme = ThemeData(
+    accentColor: Colors.white,
+    brightness: Brightness.dark,
+    primaryColor: Colors.white,
+  );
+
+  ThemeData lightTheme = ThemeData(
+      accentColor: Colors.black,
+      brightness: Brightness.light,
+      primaryColor: Colors.black);

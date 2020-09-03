@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shouldnet/src/componets/block.dart';
 import 'package:shouldnet/src/componets/const_color.dart';
 import 'package:shouldnet/src/view/homepage/body.dart';
-import 'header.dart';
+import 'body.dart';
 import 'nav_bar.dart';
 
 class HomePageDesign extends StatefulWidget {
@@ -16,10 +16,12 @@ class HomePageDesign extends StatefulWidget {
 }
 
 class _HomePageDesignState extends State<HomePageDesign> {
+  bool _light = false;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: _light ? lightTheme : darkTheme,
       builder: (context, widget) => ResponsiveWrapper.builder(
           ClampingScrollWrapper.builder(context, widget),
           defaultScale: true,
@@ -35,24 +37,37 @@ class _HomePageDesignState extends State<HomePageDesign> {
       home: Scaffold(
         drawer: mainDrawer(),
         key: _scaffoldKey,
-        backgroundColor: AppColor.backgroundColor,
+        backgroundColor: !_light ? Colors.white : Color(0xff333333),
         appBar: PreferredSize(
             preferredSize: Size(double.infinity, 66),
-            child: navBar(_scaffoldKey)),
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.menu,color:!_light ? Colors.black : Colors.white,),
+                    onPressed: () {
+                      _scaffoldKey.currentState.openDrawer();
+                    },
+                  ),
+                  Switch(
+                      value: _light,
+                      activeColor: Colors.white,
+                      inactiveTrackColor:Colors.black ,
+                      onChanged: (toggle) {
+                        setState(() {
+                          _light = toggle;
+                          print(_light);
+                        });
+                      })
+                ],
+              ),
+            )),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
             children: <Widget>[
-              ResponsiveWrapper(
-                  maxWidth: 1200,
-                  minWidth: 1200,
-                  defaultScale: true,
-                  mediaQueryData: MediaQueryData(size: Size(1200, 640)),
-                  child: ResponsiveConstraints(
-                    child: Header())),
-
-              ResponsiveConstraints(
-                  constraintsWhen: blockWidthConstraints, child: Body()),
+              ResponsiveConstraints(child: Body()),
               // ResponsiveConstraints(
               //     constraintsWhen: blockWidthConstraints, child: Section4()),
               // Footer()
