@@ -76,10 +76,13 @@ class _BodyState extends State<Body> {
               borderRadius: BorderRadius.circular(50)),
           child: TextField(
             focusNode: FocusNode(),
+            
             controller: _input,
             decoration: InputDecoration(
+
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(left: 10.0,top:5.0),
+
                   child: Icon(
                     Icons.search,
                     color: Color(0xffE3E3E3),

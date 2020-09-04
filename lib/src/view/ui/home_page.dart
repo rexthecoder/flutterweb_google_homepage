@@ -1,9 +1,9 @@
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter/material.dart';
-import 'package:shouldnet/src/componets/block.dart';
 import 'package:shouldnet/src/componets/const_color.dart';
-import 'package:shouldnet/src/view/homepage/body.dart';
+
 import 'body.dart';
+import 'footer.dart';
 import 'nav_bar.dart';
 
 class HomePageDesign extends StatefulWidget {
@@ -44,16 +44,19 @@ class _HomePageDesignState extends State<HomePageDesign> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    icon: Icon(Icons.menu,color:!_light ? Colors.black : Colors.white,),
-                    onPressed: () {
-                      _scaffoldKey.currentState.openDrawer();
-                    },
-                  ),
+                  ResponsiveVisibility(
+                      visible: false,
+                      visibleWhen: [Condition.equals(name: MOBILE)],
+                      child:navContentMobile(_scaffoldKey, _light)),
+                  ResponsiveVisibility(
+                      replacement: Text(""),
+                      visible: true,
+                      visibleWhen: [Condition.equals(name: DESKTOP), Condition.equals(name: TABLET)],
+                      child: navContent(_light)),
                   Switch(
                       value: _light,
                       activeColor: Colors.white,
-                      inactiveTrackColor:Colors.black ,
+                      inactiveTrackColor: Colors.black,
                       onChanged: (toggle) {
                         setState(() {
                           _light = toggle;
@@ -66,16 +69,18 @@ class _HomePageDesignState extends State<HomePageDesign> {
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
+            
             children: <Widget>[
               ResponsiveConstraints(child: Body()),
-              // ResponsiveConstraints(
-              //     constraintsWhen: blockWidthConstraints, child: Section4()),
-              // Footer()
+
+             
+              footer(context)
             ],
           ),
         ),
       ),
       debugShowCheckedModeBanner: false,
+      
     );
   }
 }
